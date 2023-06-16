@@ -52,11 +52,9 @@ const addSchema = Joi.object({
       "any.required": `missing required phone field`,
     })
     .required(),
-  favorite: Joi.boolean()
-    .messages({
-      "any.required": `missing field favorite`,
-    })
-    .required(),
+  favorite: Joi.boolean().messages({
+    "any.required": `missing field favorite`,
+  }),
 });
 
 const updateFavoriteSchema = Joi.object({
