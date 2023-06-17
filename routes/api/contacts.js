@@ -2,12 +2,10 @@ const express = require("express");
 
 const ctrl = require("../../controllers/contacts");
 
-const { isValidId } = require("../../middlewares/isValidId");
-const {
-  validateBody,
-  validateFavorite,
-} = require("../../middlewares/validateBody");
+const isValidId = require("../../middlewares/isValidId");
+const validateBody = require("../../middlewares/validateBody");
 const { schemas } = require("../../models/contact");
+const validateFavorite = require("../../middlewares/validateFavorite");
 
 const router = express.Router();
 
