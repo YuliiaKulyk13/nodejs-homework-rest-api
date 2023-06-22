@@ -2,8 +2,8 @@ const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 const Joi = require("joi");
 
-const emailRegExp =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+// const emailRegExp =
+//   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const userSchema = new Schema(
   {
@@ -14,7 +14,7 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      mathc: emailRegExp,
+      // mathc: emailRegExp,
       required: [true, "Email is required"],
       unique: true,
     },
@@ -31,30 +31,29 @@ const userSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
+const User = model("user", userSchema);
+
 userSchema.post("save", handleMongooseError);
 
 const registerSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().pattern(emailRegExp).required(),
+  email: Joi.string().required(),
   password: Joi.string().min(6).required(),
 });
 
 const loginSchema = Joi.object({
-  email: Joi.string().pattern(emailRegExp).required(),
+  email: Joi.string().required(),
   password: Joi.string().min(6).required(),
 });
 
-// const updateSubscriptionSchema = Joi.object({
-//   subscription: Joi.string().required(),
-// });
+const updateSubscriptionSchema = Joi.object({
+  subscription: Joi.string().valid("starter", "pro", "business").required(),
+});
 
 const schemas = {
   registerSchema,
   loginSchema,
-  // updateSubscriptionSchema,
+  updateSubscriptionSchema,
 };
-
-const User = model("user", userSchema);
 
 module.exports = {
   User,
