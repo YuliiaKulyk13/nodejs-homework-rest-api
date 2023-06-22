@@ -4,7 +4,7 @@ const validateBody = require("../../middlewares/validateBody");
 
 const { schemas } = require("../../models/user");
 
-const ctrl = require("../../controllers/auth");
+const ctrl = require("../../controllers/users");
 const authenticate = require("../../middlewares/authenticate");
 const { isValidId } = require("../../middlewares");
 
