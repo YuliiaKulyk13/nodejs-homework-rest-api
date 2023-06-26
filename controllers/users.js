@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const fs = require("fs/promises");
 const gravatar = require("gravatar");
+const Jimp = require("jimp");
 
 const { ctrlWrapper, HttpError } = require("../helpers");
 
@@ -33,6 +34,7 @@ const register = async (req, res, next) => {
     user: {
       email: newUser.email,
       subscription: newUser.subscription,
+      avatarURL,
     },
   });
 };
@@ -98,6 +100,9 @@ const updateAvatar = async (req, res) => {
   const { _id } = req.user;
 
   const { path: tempUpload, originalname } = req.file;
+
+  const avatar = await Jimp.read(tempUpload);
+  avatar.resize(250, 250).writeAsync(tempUpload);
 
   const filename = `${_id}_${originalname}`;
 
