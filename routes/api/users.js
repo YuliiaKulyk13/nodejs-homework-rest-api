@@ -10,7 +10,12 @@ const upload = require("../../middlewares/upload");
 
 const router = express.Router();
 
-router.post("/register", validateBody(schemas.registerSchema), ctrl.register);
+router.post(
+  "/register",
+  validateBody(schemas.registerSchema),
+  upload.single("avatar"),
+  ctrl.register
+);
 
 router.post("/login", validateBody(schemas.loginSchema), ctrl.login);
 
