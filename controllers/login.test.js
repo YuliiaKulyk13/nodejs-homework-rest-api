@@ -5,7 +5,7 @@ const { DB_HOST, PORT = 3000 } = process.env;
 
 const app = require("../app");
 
-beforeEach(async () => {
+beforeAll(async () => {
   await mongoose.connect(DB_HOST).then(() => {
     app.listen(PORT, () => {
       console.log("Database connection successful");
@@ -13,15 +13,15 @@ beforeEach(async () => {
   });
 });
 
-afterEach(async () => {
+afterAll(async () => {
   await mongoose.connection.close();
 });
 
-describe("POST /api/users/login", () => {
+describe("POST /users/login", () => {
   test("Login user", async () => {
-    const res = await request(app).post("/api/users/login").send({
+    const res = await request(app).post("/users/login").send({
       email: "example@example.com",
-      password: "passwordexample123455$",
+      password: "examplepassword",
     });
 
     expect(res.status).toBe(200);
